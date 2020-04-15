@@ -6,6 +6,8 @@ import sys
 from PIL import Image
 count = 1
 weather = ["Sunny", "Rain", "Cloudy", "Snow", "Fog"]
+# labels of weather
+weather_labels = ['Sunny', 'Rain', 'Cloudy', 'Snow', 'Fog']
 
 # Change directory of pictures to crop
 directory = "cloudytrain"
