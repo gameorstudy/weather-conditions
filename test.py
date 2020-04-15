@@ -23,7 +23,7 @@ dir_name = 'data/'
 for roots, dirs, files in os.walk(dir_name, topdown=True):
     if (len(dirs) != 0):
         for index in range(0, len(dirs)):
-            print((dirs))
+            print(dirs[index])
 
     '''
     print(roots)
