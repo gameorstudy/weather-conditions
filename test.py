@@ -16,8 +16,21 @@ weather_labels = ['Sunny', 'Rain', 'Cloudy', 'Snow', 'Fog']
 directory = "cloudytrain"
 path = "Image2Weather/" + directory
 
+# default the dir path
+dir_name = 'data/'
+dir_weather_labels = ['sunny', 'rain', 'cloudy', 'snow', 'fog']
+
+# read the images of different directories
+for roots, dirs, files in os.walk(dir_name):
+    print(roots)
+    print(dirs)
+    print(len(files))
+
+print('done')
+
 # directory of weather condition images
 
+'''
 for infile in os.listdir(path):
     if infile.endswith('.jpg'):
         print(infile)
@@ -38,3 +51,4 @@ if count > 1:
     print("Cropped " + str(count - 1) + " images to the " + path + " directory.")
 else:
     print("No images were cropped.")
+'''
