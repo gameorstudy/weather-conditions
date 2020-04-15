@@ -2,7 +2,10 @@
 
 # Image test
 import os
-import sys
+
+# sys didn't be used
+# import sys
+
 from PIL import Image
 count = 1
 weather = ["Sunny", "Rain", "Cloudy", "Snow", "Fog"]
@@ -12,6 +15,8 @@ weather_labels = ['Sunny', 'Rain', 'Cloudy', 'Snow', 'Fog']
 # Change directory of pictures to crop
 directory = "cloudytrain"
 path = "Image2Weather/" + directory
+
+# directory of weather condition images
 
 for infile in os.listdir(path):
     if infile.endswith('.jpg'):
