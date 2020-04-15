@@ -18,13 +18,17 @@ path = "Image2Weather/" + directory
 
 # default the dir path
 dir_name = 'data/'
-dir_weather_labels = ['sunny', 'rain', 'cloudy', 'snow', 'fog']
 
 # read the images of different directories
-for roots, dirs, files in os.walk(dir_name):
+for roots, dirs, files in os.walk(dir_name, topdown=True):
+    if (len(dirs) != 0):
+        for index in range(0, len(dirs)):
+            print((dirs))
+
+    '''
     print(roots)
-    print(dirs)
     print(len(files))
+    '''
 
 print('done')
 
