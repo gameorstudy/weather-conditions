@@ -1,3 +1,6 @@
+'''
+Predict selected image using the trained model
+'''
 from imageai.Prediction.Custom import CustomImagePrediction
 import os
 from PIL import Image
