@@ -8,6 +8,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import random
 #Picture to open
+weathers = ['sunny', 'rain', 'cloudy', 'snow']
 path = "sampletest/testdata"
 today = date.today()
 date = today.strftime("%d-%m-%Y")
@@ -15,6 +16,9 @@ savePath = path + "/" + str(date)
 try:
     os.mkdir(savePath)
     print("Directory ", savePath, " created.")
+    for weather in weathers:
+        createDir = savePath + "/" + weather
+        os.mkdir(createDir)
 except FileExistsError:
     print("Directory ", savePath, " already exists.")
 
@@ -55,5 +59,5 @@ for infile in os.listdir(path):
         draw.text((1,y+1), drawtext,(0,0,0),font=font)
         draw.text((0, y), drawtext,(255,255,255),font=font)
         randomValue = random.randint(0, 100000)
-        i.save('{}/{}_{}_{}{}'.format(savePath, count, predicted, randomValue, fext))
+        i.save('{}/{}/{}_{}{}'.format(savePath, predicted, count, randomValue, fext))
         count += 1
