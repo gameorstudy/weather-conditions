@@ -21,6 +21,11 @@ date = today.strftime("%d-%m-%Y")
 #String for creating a new directory
 savePath = path + "/" + str(date)
 #Create a new directory unless it already exists
+
+'''totalAccuracy = 0
+totalCorrect = 0
+totalWrong = 0
+totalWrongAccuracy = 0'''
 try:
     os.mkdir(savePath)
     print("Directory ", savePath, " created.")
@@ -46,6 +51,7 @@ prediction.loadModel(num_objects=10)
 for infile in os.listdir(path):
     #loop only jpg, jpeg and png files
     if infile.endswith('.jpg' or '.jpeg' or '.png'):
+        
         #select the image
         imgPath = os.path.join(path, infile)
         #get the prediction of the image
@@ -53,16 +59,28 @@ for infile in os.listdir(path):
         #Loop the predictions to the terminal
         for eachPrediction, eachProbability in zip(predictions, probabilities):
             print(eachPrediction , " : " , str(round(eachProbability,2)), "%")
+        print(infile)
         #Open the image for modification using PIL
         i = Image.open(os.path.join(path, infile))
         #Save the file name and type as strings
         fn, fext = os.path.splitext(infile)
-
         #Draw 1st prediction
         draw = ImageDraw.Draw(i)
         #Get string of prediction and probability
         predicted = str(predictions[0])
         probability = str(round(probabilities[0], 2))
+        probabilityInt = int(round(probabilities[0], 2))
+        '''
+        Extra accuracy for results
+        if predicted == "snow":
+            totalCorrect +=1
+            totalAccuracy +=probabilityInt
+        elif predicted == "cloudy":
+            print('Cloud!')
+        else:
+            totalWrong +=1
+            totalWrongAccuracy += probabilityInt
+        '''
         #The text to draw on the picture
         drawtext = predicted + " : " + probability + "%"
         #Border
@@ -82,3 +100,9 @@ for infile in os.listdir(path):
 
         #Save the newly edited image in the predicted directory
         i.save('{}/{}/{}{}'.format(savePath, predicted, fn, fext))
+        '''
+finalAccuracy = totalAccuracy / totalCorrect
+finalWrongAccuracy = totalWrongAccuracy / totalWrong
+print(finalAccuracy)
+print(finalWrongAccuracy)
+        '''
