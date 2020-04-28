@@ -15,17 +15,25 @@ from PIL import ImageDraw
 weathers = ['sunny', 'rain', 'cloudy', 'snow']
 #Path to the folder holding the images to test
 path = "sampletest/testdata"
+#Path to the model That is being used
+modelPath = "sampletest/model_ex-122_acc-1.000000.h5"
 #Date for naming the directory
 today = date.today()
 date = today.strftime("%d-%m-%Y")
 #String for creating a new directory
 savePath = path + "/" + str(date)
-#Create a new directory unless it already exists
 
-'''totalAccuracy = 0
+#Result counters
+totalAccuracy = 0
 totalCorrect = 0
 totalWrong = 0
-totalWrongAccuracy = 0'''
+totalWrongAccuracy = 0
+guessesSunny = 0
+guessesRain = 0
+guessesCloudy = 0
+guessesSnow = 0
+
+#Create a new directory unless it already exists
 try:
     os.mkdir(savePath)
     print("Directory ", savePath, " created.")
@@ -43,7 +51,7 @@ execution_path = os.getcwd()
 #predict the image using the model class and trained weather model
 prediction = CustomImagePrediction()
 prediction.setModelTypeAsResNet()
-prediction.setModelPath("sampletest/model_ex-110_acc-0.722222.h5")
+prediction.setModelPath(modelPath)
 prediction.setJsonPath("sampletest/model_class.json")
 prediction.loadModel(num_objects=10)
 
@@ -70,17 +78,25 @@ for infile in os.listdir(path):
         predicted = str(predictions[0])
         probability = str(round(probabilities[0], 2))
         probabilityInt = int(round(probabilities[0], 2))
-        '''
-        Extra accuracy for results
+        
+        #Extra accuracy for results
+        correctWeather = "snow"
+
         if predicted == "snow":
-            totalCorrect +=1
-            totalAccuracy +=probabilityInt
-        elif predicted == "cloudy":
-            print('Cloud!')
+            guessesSnow += 1
+        elif predicted == "rain":
+            guessesRain += 1
+        elif predicted == "sunny":
+            guessesSunny += 1
+        else:
+            guessesCloudy += 1
+            
+        if predicted == correctWeather:
+            totalCorrect += 1
+            totalAccuracy += probabilityInt
         else:
             totalWrong +=1
             totalWrongAccuracy += probabilityInt
-        '''
         #The text to draw on the picture
         drawtext = predicted + " : " + probability + "%"
         #Border
@@ -100,9 +116,11 @@ for infile in os.listdir(path):
 
         #Save the newly edited image in the predicted directory
         i.save('{}/{}/{}{}'.format(savePath, predicted, fn, fext))
-        '''
+        
 finalAccuracy = totalAccuracy / totalCorrect
 finalWrongAccuracy = totalWrongAccuracy / totalWrong
-print(finalAccuracy)
-print(finalWrongAccuracy)
-        '''
+totalGuesses = guessesSunny + guessesCloudy +guessesRain + guessesSnow
+print("Final accuracy when correct: " + str(finalAccuracy) + "%")
+print("Final accuracy when wrong: " + str(finalWrongAccuracy) + "%")
+print("Total guesses: " + str(totalGuesses))
+print("Sunny guesses: " + str(guessesSunny) + ", Cloudy guesses: " + str(guessesCloudy) +", Rain guesses: " + str(guessesRain) +", Snow guesses: " + str(guessesSnow))
